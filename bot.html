@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Bot</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: black;
+            background-image: url(bot.jpg);
+            background-size: cover;
+        }
+
+        h1 {
+            color: white;
+        }
+
+        .chat-container {
+            position: fixed;
+            top: 200px;
+            right: 600px;
+            max-width: 400px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .chat-box {
+            border: 1px solid #ccc;
+            padding: 20px;
+            height: 200px;
+            width: 200px;
+            overflow-y: scroll;
+            margin-bottom: 10px;
+        }
+
+        .user-input {
+            display: flex;
+        }
+
+        .user-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .user-input button {
+            padding: 10px;
+            margin-left: 5px;
+            border: none;
+            background: #28a745;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .user-input button:hover {
+            background: #218838;
+        }
+
+        .message {
+            margin: 10px 0;
+        }
+
+        .bot {
+            color: #007bff;
+        }
+
+        .user {
+            color: #28a745;
+            text-align: right;
+        }
+
+        .panic-button {
+            padding: 20px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .panic-button:hover {
+            background-color: #c82333;
+        }
+
+        .questions-list {
+            margin-top: 20px;
+        }
+
+        .questions-list button {
+    display: block;
+    background: #f8f9fa;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 5px 0;
+    width: 40%;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 10px; /* Curved edges */
+}
+
+        .questions-list button:hover {
+            background: #e2e6ea;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Chat with Us</h1>
+    </header>
+
+    <div class="chat-container">
+        <div class="chat-box" id="chat-box"></div>
+        <div class="user-input">
+            <input type="text" id="user-input" placeholder="Type your question..." />
+            <button id="send-button">Send</button>
+        </div>
+    </div>
+    <button class="panic-button" id="panic-button">Panic!</button>
+
+    <div class="questions-list" id="questions-list">
+        <h3>Quick Questions:</h3>
+        <button data-question="hello">Hello</button>
+        <button data-question="how are you?">How are you?</button>
+        <button data-question="what services do you offer?">What services do you offer?</button>
+        <button data-question="what are your operating hours?">What are your operating hours?</button>
+        <button data-question="how can i contact support?">How can I contact support?</button>
+        <button data-question="what is carpooling?">What is carpooling?</button>
+        <button data-question="can i change my booking?">Can I change my booking?</button>
+        <button data-question="bye">Bye</button>
+    </div>
+
+    <script>
+        const chatBox = document.getElementById('chat-box');
+        const userInput = document.getElementById('user-input');
+        const sendButton = document.getElementById('send-button');
+        const questionsList = document.getElementById('questions-list');
+
+        const botResponses = {
+            "hello": "Hello! How can I help you today?",
+            "how are you?": "I'm just a bot, but thanks for asking!",
+            "what services do you offer?": "We offer various carpooling options, including ride-sharing and vehicle rentals.",
+            "what are your operating hours?": "We operate 24/7 to assist you whenever you need.",
+            "how can i contact support?": "You can reach our support team via the Contact page or email us at support@carpool.com.",
+            "where are you located?": "We are located in multiple cities; check our website for details.",
+            "bye": "Goodbye! Have a great day!",
+            "what is carpooling?": "Carpooling is a shared transportation method where multiple people travel together in one vehicle.",
+            "can i change my booking?": "Yes, you can modify your booking through your account settings."
+        };
+
+        // Function to display chat messages
+        function displayMessage(message, sender) {
+            chatBox.innerHTML += `<div class="message ${sender}">${message}</div>`;
+            chatBox.scrollTop = chatBox.scrollHeight; // Scroll to the bottom
+        }
+
+        // Send button click event
+        sendButton.addEventListener('click', () => {
+            const userMessage = userInput.value.trim();
+            if (userMessage) {
+                displayMessage(userMessage, 'user');
+                userInput.value = '';
+                setTimeout(() => {
+                    const botResponse = botResponses[userMessage.toLowerCase()] || "I'm sorry, I don't understand that.";
+                    displayMessage(botResponse, 'bot');
+                }, 1000); // Simulate bot response delay
+            }
+        });
+
+        // Allow pressing Enter to send message
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendButton.click();
+            }
+        });
+
+        // Add event listeners to quick questions
+        questionsList.addEventListener('click', (e) => {
+            if (e.target.tagName === 'BUTTON') {
+                const question = e.target.getAttribute('data-question');
+                displayMessage(question, 'user');
+                setTimeout(() => {
+                    const botResponse = botResponses[question.toLowerCase()] || "I'm sorry, I don't understand that.";
+                    displayMessage(botResponse, 'bot');
+                }, 1000);
+            }
+        });
+
+        document.getElementById('panic-button').addEventListener('click', () => {
+            const emergencyContactNumber = '+916363788456'; // Replace with the actual number
+            const message = 'Emergency! I need help.';
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((position) => {
+                    const { latitude, longitude } = position.coords;
+                    const locationMessage = `My location: https://www.google.com/maps?q=${latitude},${longitude}`;
+                    sendPanicMessage(emergencyContactNumber, message + '\n' + locationMessage);
+                }, () => {
+                    alert('Unable to retrieve your location.');
+                });
+            } else {
+                alert('Geolocation is not supported by this browser.');
+            }
+        });
+
+        function sendPanicMessage(contactNumber, message) {
+            fetch('/send-sms', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    to: contactNumber,
+                    message: message,
+                }),
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Panic message sent successfully.');
+                } else {
+                    alert('Failed to send panic message.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error sending message.');
+            });
+        }
+    </script>
+</body>
+</html>

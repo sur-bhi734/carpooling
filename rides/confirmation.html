@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, content="width=device-width, initial-scale=1.0">
+    <title>Carpooling Database</title>
+    <link rel="stylesheet" href="sty.css">
+</head>
+<body>
+    <h1>Carpooling Database</h1>
+
+    <h2>Find Matching Carpools:</h2>
+    <form id="findRoutesForm">
+        <label for="find_start_location">Starting Location:</label>
+        <input type="text" id="find_start_location" required>
+
+        <label for="find_destination">Destination Location:</label>
+        <input type="text" id="find_destination" required>
+        
+        <button type="submit">Find Routes</button>
+    </form>
+
+    <table id="resultsTable">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Starting Location</th>
+            <th>Destination</th>
+            <th>Contact</th>
+            <th>Available Seats</th>
+        </tr>
+    </table>
+
+    <script src="scr.js"></script>
+</body>
+</html>

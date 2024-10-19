@@ -1,0 +1,185 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #f0f8ff, #74ebd5); /* Gradient background for more visual appeal */
+    color: #333;
+    padding: 20px;
+}
+
+.form-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Improved shadow for more depth */
+    animation: slideIn 1s ease-in-out; /* Form entrance animation */
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+h1 {
+    text-align: center;
+    color: #34495e;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    position: relative;
+    letter-spacing: 1px;
+    animation: fadeIn 1.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #2c3e50;
+    font-size: 1.1rem;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #bdc3c7;
+    border-radius: 6px;
+    font-size: 16px;
+    background-color: #ecf0f1;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus {
+    border-color: #2980b9;
+    box-shadow: 0 0 8px rgba(41, 128, 185, 0.5); /* Shadow on focus for better visibility */
+    outline: none;
+}
+
+input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+button:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px); /* Button slightly lifts on hover */
+    box-shadow: 0 8px 20px rgba(41, 128, 185, 0.3); /* Box-shadow effect on hover */
+}
+
+button:active {
+    background-color: #1e6d99;
+    transform: translateY(1px); /* Button "press" effect on click */
+}
+
+h2 {
+    margin-top: 40px;
+    color: #34495e;
+    text-align: center;
+    font-size: 1.8rem;
+    animation: popIn 1.2s ease-in-out;
+}
+
+@keyframes popIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+ul {
+    list-style-type: disc;
+    margin: 20px;
+    padding-left: 20px;
+    color: #2c3e50;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    animation: listFade 1.2s ease-in-out;
+}
+
+@keyframes listFade {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+p {
+    margin: 10px 0;
+    text-align: center;
+    font-size: 1.1em;
+    color: #34495e;
+    animation: fadeInUp 1.2s ease-in-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.application-status {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #2c3e50;
+    border-radius: 10px;
+    background-color: #f7f9f9;
+    animation: fadeIn 1.2s ease-in-out;
+}
+
+.application-status p {
+    font-weight: bold;
+    color: #2c3e50;
+    font-size: 1.2rem;
+}
+
+.next-steps {
+    margin-top: 15px;
+    color: #7f8c8d;
+    font-size: 1rem;
+}

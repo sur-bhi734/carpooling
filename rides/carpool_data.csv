@@ -1,0 +1,5 @@
+id,name,start_location,destination,available_seats,contact
+1,John Doe,bmsit,nmit,3,123-456-7890
+2,Jane Smith,City C,City B,4,098-765-4321
+3,Alice Johnson,bmsit,nmit,2,234-567-8901
+4,Bob Brown,City B,City C,4,345-678-9012

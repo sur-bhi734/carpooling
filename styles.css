@@ -1,0 +1,124 @@
+/* General Body Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('carpool.jpg'); /* Set your image path */
+    background-size: cover; /* Ensures the image covers the entire area */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents image repetition */
+    background-attachment: fixed; /* Keeps the image fixed while scrolling */
+    margin: 0;
+    padding: 0;
+}
+
+/* Title Styles */
+
+
+/* Container Styles */
+.container {
+    text-align: center;
+    padding: 30px; /* Increased padding for better spacing */
+    margin: 150px auto; /* Increased top margin to move it down */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.8); /* White background with 80% opacity for transparency */
+    border: 1px solid rgba(224, 224, 224, 0.5); /* Light border with reduced opacity */
+    max-width: 600px; /* Set a maximum width for the box */
+    transition: box-shadow 0.3s ease; /* Add a transition effect */
+}
+
+
+.container:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Slightly deeper shadow on hover */
+}
+
+/* Paragraph Styles */
+p {
+    margin: 10px 0;
+}
+
+.welcome {
+    font-size: 50px;
+    font-weight: bold;
+    color: #211b1b;
+}
+
+.message {
+    font-size: 22px;
+    color: black;
+}
+
+.sub-message {
+    font-size: 20px;
+    color: #221b1b;
+}
+
+/* Button Styles */
+.auth-buttons {
+    display: flex; /* Use flexbox for centering */
+    justify-content: center; /* Center items horizontally */
+    margin-top: 20px; /* Space above the buttons */
+}
+
+.center-buttons {
+    display: flex; /* Flex container for buttons */
+    gap: 15px; /* Space between buttons */
+}
+
+a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: rgba(93, 4, 78, 0.588);
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 18px;
+    transition: background-color 0.3s; /* Smooth background transition */
+}
+
+a:hover {
+    background-color: darkmagenta;
+}
+
+.special-btn {
+    background-color: #5D044E96; /* Green background for special buttons */
+    font-weight: bold; /* Make text bold */
+    font-size: 20px; /* Slightly larger font size */
+    padding: 12px 24px; /* Increased padding for a larger button */
+    border-radius: 8px; /* Rounded corners for special buttons */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+}
+
+.special-btn:hover {
+    background-color: darkmagenta; /* Darker green on hover */
+}
+
+/* Navigation Styles */
+nav {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center; /* Center the navigation */
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+}
+
+nav ul li {
+    margin-right: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: aliceblue;
+}

@@ -1,0 +1,90 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #74ebd5, #acb6e5); /* Soft gradient background */
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+.about-section {
+    background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white background */
+    padding: 40px;
+    margin: 50px auto;
+    width: 80%;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    text-align: center;
+    position: relative; /* For positioning image */
+    overflow: hidden; /* Hide overflow for image */
+    animation: fadeIn 1s ease-in-out; /* Fade in animation */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+h1 {
+    color: #2c3e50;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Soft text shadow */
+}
+
+.about-description {
+    font-size: 1.1em;
+    line-height: 1.6;
+    max-height: 100px; /* Limit height for the initial text */
+    overflow: hidden; /* Hide overflow */
+    transition: max-height 0.3s ease; /* Smooth transition */
+}
+
+#more {
+    display: none;
+}
+
+button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.2s; /* Add transform for scaling */
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2); /* Button shadow */
+}
+
+button:hover {
+    background-color: #2980b9;
+    transform: scale(1.05); /* Scale effect on hover */
+}
+
+.car-image {
+    position: absolute; /* Absolute positioning */
+    top: 20px; /* Position from the top */
+    left: 50%;
+    transform: translateX(-50%); /* Center image */
+    width: 120%; /* Slightly wider than container */
+    opacity: 0.15; /* Make image semi-transparent */
+    pointer-events: none; /* Disable pointer events */
+}
+
+.about-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('about.png'); /* Background image */
+    background-size: cover;
+    background-position: center;
+    opacity: 0.2; /* Background image opacity */
+    z-index: 0; /* Place behind the content */
+}
+
+.about-section > * {
+    position: relative; /* Ensure content is above the background */
+    z-index: 1; /* Bring content above the background */
+}

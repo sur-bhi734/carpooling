@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pickup & Drop Location Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" 
+     crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" 
+    crossorigin=""></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        h1 {
+            color: #343a40;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        .controls { 
+            margin-bottom: 20px; 
+            text-align: left; /* Align controls to the left */
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 600px; /* Max width for the controls box */
+            margin-left: auto; /* Center the controls horizontally */
+            margin-right: auto; /* Center the controls horizontally */
+        }
+
+        #map { 
+            height: 500px; 
+            border-radius: 10px; 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            margin-top: 20px; /* Add space above the map */
+        }
+
+        label {
+            display: block; /* Ensure labels are block elements */
+            margin-top: 15px; /* Add some space above labels */
+            font-weight: bold; /* Make labels bold for emphasis */
+        }
+
+        input {
+            width: calc(100% - 30px); /* Full width with padding adjustment */
+            padding: 12px 15px;
+            margin-top: 5px; /* Slightly less space after label */
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 16px; 
+            transition: border-color 0.2s ease-in-out;
+        }
+
+        input:focus {
+            border-color: #80bdff;
+            outline: none;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+        .btn-small {
+            padding: 6px 10px; /* Smaller padding for small buttons */
+            font-size: 14px; /* Smaller font size */
+            margin-top: 10px; 
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            border-radius: 5px;
+            border: none; /* Remove border */
+        }
+
+        button {
+            background-color: #28a745; /* Default button color */
+            color: white;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .current-location-btn {
+            background-color: #007bff; /* Blue button for current location */
+        }
+
+        .current-location-btn:hover {
+            background-color: #0056b3;
+        }
+
+        #estimated-time {
+            margin: 20px 0;
+            font-size: 18px;
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: inline-block; /* Inline block for alignment with button */
+        }
+
+        .button-container {
+            display: flex;
+            align-items: center; /* Center align items vertically */
+            justify-content: center;
+            gap: 10px; /* Space between elements */
+            margin-top: 10px; /* Space above button container */
+        }
+
+        .choose-vehicle-btn {
+            margin-left: 20px; /* Space between estimated time and button */
+            height: 50px;
+        }
+
+        /* Styling for date and time input fields */
+        .schedule-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .schedule-container input {
+            padding: 10px;
+            font-size: 16px;
+            width: 400px;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+        }
+    </style>
+</head>
+<body>
+    <h1>Set Pickup and Drop Location</h1>
+    <div class="controls">
+        <label for="pickup">Pickup Location:</label>
+        <input type="text" id="pickup" placeholder="Enter pickup location" list="pickupSuggestions" oninput="fetchLocationSuggestions(this.value, 'pickupSuggestions')">
+        <datalist id="pickupSuggestions"></datalist>
+        <button class="current-location-btn btn-small" onclick="setCurrentLocation()">Use Current Location</button>
+        
+        <label for="drop">Drop Location:</label>
+        <input type="text" id="drop" placeholder="Enter drop location" list="dropSuggestions" oninput="fetchLocationSuggestions(this.value, 'dropSuggestions')">
+        <datalist id="dropSuggestions"></datalist>
+
+        <button class="btn-small" onclick="setLocations()">Set Locations</button>
+    </div>
+
+    <div id="map"></div>
+    
+    <div class="button-container">
+        <div id="estimated-time">Estimated Travel Time: <span id="travel-time"></span></div>
+        <button class="btn-small choose-vehicle-btn" onclick="window.location.href='vehicles.html'">Choose Vehicle</button>
+    </div>
+
+    <!-- Date and Time Scheduling Inputs -->
+    <div class="schedule-container">
+        <label for="schedule-date">Schedule Date:</label>
+        <input type="date" id="schedule-date" required>
+        <label for="schedule-time">Schedule Time:</label>
+        <input type="time" id="schedule-time" required>
+    </div>
+
+    <script>
+        // Initialize the map, center on India and restrict bounds
+        var map = L.map('map').setView([20.5937, 78.9629], 5);
+
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        // Restrict the map to India bounds
+        const indiaBounds = [[6.5546079, 68.1113787], [35.6745457, 97.395561]];
+        map.setMaxBounds(indiaBounds);
+        map.on('drag', function() {
+            map.panInsideBounds(indiaBounds, { animate: false });
+        });
+
+        let pickupMarker, dropMarker, routeLine;
+
+        // Function to set pickup and drop locations based on user input
+        function setLocations() {
+            const pickupInput = document.getElementById('pickup').value;
+            const dropInput = document.getElementById('drop').value;
+
+            if (pickupInput && dropInput) {
+                getCoordinates(pickupInput, (pickupCoords) => {
+                    getCoordinates(dropInput, (dropCoords) => {
+                        if (pickupCoords && dropCoords) {
+                            if (pickupMarker) map.removeLayer(pickupMarker);
+                            if (dropMarker) map.removeLayer(dropMarker);
+                            if (routeLine) map.removeLayer(routeLine);
+
+                            pickupMarker = L.marker(pickupCoords).addTo(map).bindPopup("Pickup Location").openPopup();
+                            dropMarker = L.marker(dropCoords).addTo(map).bindPopup("Drop Location").openPopup();
+
+                            const bounds = L.latLngBounds([pickupCoords, dropCoords]);
+                            map.fitBounds(bounds);
+
+                            // Fetch and display the route
+                            fetchRouteAndDisplay(pickupCoords, dropCoords);
+                        } else {
+                            alert("Could not fetch coordinates for the locations.");
+                        }
+                    });
+                });
+            } else {
+                alert("Please enter valid pickup and drop locations");
+            }
+        }
+
+        // Get the current location of the user and set it as the pickup location
+        function setCurrentLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((position) => {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    document.getElementById('pickup').value = `${lat}, ${lon}`;
+                    
+                    // Automatically set the pickup marker on the map using the current location
+                    if (pickupMarker) map.removeLayer(pickupMarker);
+                    pickupMarker = L.marker([lat, lon]).addTo(map).bindPopup("Current Pickup Location").openPopup();
+                    map.setView([lat, lon], 14); // Zoom in on current location
+                }, () => {
+                    alert("Unable to retrieve your location.");
+                });
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        // Fetch location suggestions from Nominatim API
+        function fetchLocationSuggestions(query, datalistId) {
+            const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&countrycodes=IN&limit=5`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const datalist = document.getElementById(datalistId);
+                    datalist.innerHTML = ""; 
+
+                    if (data && data.length > 0) {
+                        data.forEach(location => {
+                            const option = document.createElement('option');
+                            option.value = location.display_name; 
+                            datalist.appendChild(option);
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching location suggestions:', error);
+                });
+        }
+
+        // Get coordinates from Nominatim API
+        function getCoordinates(location, callback) {
+            const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(location)}&countrycodes=IN`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.length > 0) {
+                        const lat = parseFloat(data[0].lat);
+                        const lon = parseFloat(data[0].lon);
+                        callback([lat, lon]);
+                    } else {
+                        callback(null);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching location data:', error);
+                    callback(null);
+                });
+        }
+
+        // Fetch the route and display it on the map
+        function fetchRouteAndDisplay(pickupCoords, dropCoords) {
+            const osrmUrl = `https://router.project-osrm.org/route/v1/driving/${pickupCoords[1]},${pickupCoords[0]};${dropCoords[1]},${dropCoords[0]}?overview=full&geometries=geojson`;
+
+            fetch(osrmUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`OSRM request failed with status ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data); // Log the response data for debugging
+                    if (data && data.routes && data.routes.length > 0) {
+                        const route = data.routes[0];
+                        const routeCoords = route.geometry.coordinates.map(coord => [coord[1], coord[0]]); // Reverse the lat/lon order
+                        
+                        // Draw the route on the map
+                        routeLine = L.polyline(routeCoords, {color: 'blue'}).addTo(map);
+                        
+                        // Display the travel time in minutes
+                        const travelTimeMinutes = Math.round(route.duration / 60);
+                        document.getElementById('travel-time').innerText = `${travelTimeMinutes} minutes`;
+                        alert(`Estimated travel time: ${travelTimeMinutes} minutes`);
+                    } else {
+                        alert("No route found between the locations.");
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching route data:', error);
+                    alert("Error fetching the route. Please try again.");
+                });
+        }
+    </script>
+</body>
+</html>

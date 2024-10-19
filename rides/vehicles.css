@@ -1,0 +1,76 @@
+body {
+    font-family: 'Poppins', sans-serif; /* Change font for a modern look */
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+    
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px; /* Space below heading */
+}
+
+.vehicles-container {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center align items */
+    gap: 15px; /* Space between items */
+}
+
+.vehicle-item {
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Center icon and text vertically */
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    width: 80%; /* Responsive width */
+    max-width: 600px; /* Limit maximum width */
+    padding: 15px; /* Inner spacing */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transition for hover effects */
+}
+
+.vehicle-item:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Slightly enhance shadow on hover */
+}
+
+.vehicle-icon {
+    width: 60px; /* Set width for the icon */
+    height: 60px; /* Set height for the icon */
+    border-radius: 10px; /* Rounded corners for icons */
+    margin-right: 15px; /* Space between icon and text */
+}
+
+.vehicle-details h2 {
+    margin: 0; /* Remove default margin */
+    font-size: 1.5em;
+    color: #2C3E50; /* Darker color for titles */
+}
+
+.vehicle-details p {
+    margin: 5px 0 0; /* Adjust margins for better spacing */
+    color: #555; /* Text color */
+    font-size: 0.9em; /* Slightly smaller font size */
+}
+
+.button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+.confirm-button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}

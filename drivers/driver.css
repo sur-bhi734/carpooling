@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;500&family=Lobster&display=swap');
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: linear-gradient(135deg, #74ebd5, #acb6e5); /* Gradient background */
+    animation: gradientBG 10s ease infinite; /* Background animation */
+}
+
+@keyframes gradientBG {
+    0% {
+        background-image: linear-gradient(135deg, #74ebd5, #acb6e5);
+    }
+    50% {
+        background-image: linear-gradient(135deg, #acb6e5, #74ebd5);
+    }
+    100% {
+        background-image: linear-gradient(135deg, #74ebd5, #acb6e5);
+    }
+}
+
+.form-container {
+    background-color: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    max-width: 450px;
+    width: 100%;
+    text-align: center; /* Ensure form contents are centered */
+    position: relative;
+    animation: fadeIn 1s ease-in-out; /* Smooth fade-in animation */
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px); /* Animate from top */
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0); /* End position */
+    }
+}
+
+/* Updated icon container with driver icon */
+.icon-container {
+    position: relative;
+    margin-bottom: -50px; /* Adjust margin to overlap the form */
+    text-align: center;
+}
+
+.icon-container img {
+    width: 90px; /* Adjust the image size */
+    height: 90px;
+    border-radius: 50%; /* Make the image circular */
+    object-fit: cover; /* Ensure the image covers the circle without distortion */
+    display: block;
+    margin: 0 auto 20px; /* Center the image horizontally and add bottom margin */
+    border: 5px solid #28a745; /* Optional: Add a border around the circle */
+    box-shadow: 0 10px 25px rgba(40, 167, 69, 0.3); /* Add shadow effect */
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 28px;
+    position: relative;
+    font-family: 'Lobster', cursive; /* Applying Lobster font */
+    padding-bottom: 10px;
+}
+
+h1:after {
+    content: '';
+    width: 60px;
+    height: 4px;
+    background-color: #28a745;
+    display: block;
+    margin: 0 auto;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 2px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+form input[type="text"],
+form input[type="number"],
+form select {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+    background-color: #fafafa;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+form input[type="text"]:focus,
+form input[type="number"]:focus,
+form select:focus {
+    border-color: #28a745;
+    box-shadow: 0 0 10px rgba(40, 167, 69, 0.3);
+    outline: none;
+    background-color: #fefefe;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 15px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.4s ease, box-shadow 0.3s ease, transform 0.2s ease;
+    position: relative;
+}
+
+button[type="submit"]:hover {
+    background-color: #218838;
+    box-shadow: 0 10px 15px rgba(40, 167, 69, 0.4);
+    transform: translateY(-3px); /* Lift the button slightly on hover */
+}
+
+button[type="submit"]:active {
+    background-color: #1e7e34;
+    box-shadow: 0 5px 10px rgba(40, 167, 69, 0.3);
+    transform: translateY(1px); /* Slight press effect on click */
+}
+
+input[type="file"] {
+    display: none;
+}
